@@ -76,6 +76,8 @@ clean:
 	@ echo "All done!"
 
 dockerrun dkr:
+	# create the data dir first (in case docker is running as root)
+	@ mkdir -p local/dynamodb
 	@ docker run -p 8000:8000 -d --rm --network lambda-local --name dynamodb -v $(CURDIR)/local/dynamodb:/data/ amazon/dynamodb-local -jar DynamoDBLocal.jar -sharedDb -dbPath /data
 
 dockerstop dks:
